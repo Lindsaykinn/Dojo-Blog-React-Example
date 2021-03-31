@@ -7,6 +7,11 @@ const Home = () => {
     {title: 'Welcome party', body: 'content 2', author: 'yoshi', id:2 },
     {title: 'Web dev top tips', body: 'content 3', author: 'mario', id:3 }
   ])
+
+  const handleDelete = (id) => {
+    const newBlogs = blogs.filter(blog => blog.id !== id);
+    setBlogs(newBlogs);
+  }
   
   const [name, setName] = useState('mario')
   // let name = 'mario'
@@ -27,7 +32,7 @@ const Home = () => {
       <p>{ name } is {age} years old</p>
       <button onClick={handleClick}>Click me</button>
       <button onClick={(e)=> handleClickAgain('mario', e)}>Click me again</button>
-      <BlogList blogs={blogs} title='All Blogs'/>
+      <BlogList blogs={blogs} title='All Blogs' handleDelete={handleDelete}/>
       <BlogList blogs={blogs.filter((blog)=> blog.author === 'mario')} title="Mario's Blogs"/>
     </div>
    );
