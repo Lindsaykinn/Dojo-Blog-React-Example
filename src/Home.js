@@ -27,7 +27,7 @@ const Home = () => {
       <p>{ name } is {age} years old</p>
       <button onClick={handleClick}>Click me</button>
       <button onClick={(e)=> handleClickAgain('mario', e)}>Click me again</button>
-      <BlogList />
+      <BlogList blogs={blogs} title='All Blogs'/>
     </div>
    );
 }
