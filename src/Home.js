@@ -6,6 +6,7 @@ const Home = () => {
   
   const [name, setName] = useState('mario')
   const [isPending, setIsPending] = useState(true)
+  const [error, setError] = useState(null)
 
 
   //will run anytime there is a re-render
@@ -14,11 +15,19 @@ const Home = () => {
     // console.log(blogs)
     fetch('http://localhost:8000/blogs')
       .then(resp => {
+        if(!resp.ok){
+          throw Error('could not fetch the data for that resource')
+        }
         return resp.json()
       })
       .then((data) => {
         setBlogs(data)
         setIsPending(false)
+        setError(null)
+      })
+      .catch(error => {
+        setIsPending(false)
+        setError(error.message)
       })
   }, [])
   
@@ -39,6 +48,7 @@ const Home = () => {
       <button onClick={() => setName('luigi')}>change name</button>
       <p>{ name }</p>
       <button onClick={(e)=> handleClickAgain('mario', e)}>Click me again</button>
+      { error && <div>{ error }</div>}
        { isPending && <div>Loading...</div> }
       {blogs && <BlogList blogs={blogs} title='All Blogs' />}
       {blogs && <BlogList blogs={blogs.filter((blog)=> blog.author === 'mario')} title="Mario's Blogs"/>}
