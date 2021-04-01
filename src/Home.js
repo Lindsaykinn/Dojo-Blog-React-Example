@@ -5,6 +5,7 @@ const Home = () => {
   const [blogs, setBlogs] = useState(null)
   
   const [name, setName] = useState('mario')
+  const [isPending, setIsPending] = useState(true)
 
 
   //will run anytime there is a re-render
@@ -17,6 +18,7 @@ const Home = () => {
       })
       .then((data) => {
         setBlogs(data)
+        setIsPending(false)
       })
   }, [])
   
@@ -37,6 +39,7 @@ const Home = () => {
       <button onClick={() => setName('luigi')}>change name</button>
       <p>{ name }</p>
       <button onClick={(e)=> handleClickAgain('mario', e)}>Click me again</button>
+       { isPending && <div>Loading...</div> }
       {blogs && <BlogList blogs={blogs} title='All Blogs' />}
       {blogs && <BlogList blogs={blogs.filter((blog)=> blog.author === 'mario')} title="Mario's Blogs"/>}
     </div>
