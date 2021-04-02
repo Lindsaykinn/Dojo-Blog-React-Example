@@ -12,7 +12,7 @@ const useFetch = (url) => {
     // console.log(blogs)
     fetch(url, {signal: abortCont.signal })
       .then(resp => {
-        if(!resp.ok){
+        if(!resp.ok){ //error coming back from the server
           throw Error('could not fetch the data for that resource')
         }
         return resp.json()
@@ -26,10 +26,13 @@ const useFetch = (url) => {
         if (error.name === 'AbortError'){
           console.log('fetch aborted')
         }else {
+          // auto catches network / connection error
         setIsPending(false)
         setError(error.message)
         }
       })
+
+      //abort the fetch
       return () => abortCont.abort()
   }, [url])
 
